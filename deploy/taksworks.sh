@@ -1,4 +1,5 @@
 #!/bin/sh
 cd /srv/www/taksworks
 /root/taksworks
-sed -i 's/(c)/©/g' /srv/www/taksworks/index.html
+
+find /srv/www/taksworks -name '*.html' -exec sed -i 's/(c)/©/g' {} \;
