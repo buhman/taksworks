@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -x
+
+exec > >(tee -i /tmp/takwatch.log)
+exec 2>&1
+
+while true; do
+    find /srv/www/taksworks/photos | entr -n -d true
+    /root/taksworks.sh
+done

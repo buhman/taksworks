@@ -1,0 +1,146 @@
+@font-face {
+    font-family: "KozMinPro";
+    font-weight: 400;
+    font-style: normal;
+    src: url("/static/KozMinPro-Medium.woff2") format("woff2");
+}
+
+body {
+    font-family: "KozMinPro", sans-serif;
+    font-size: 1em;
+    background-color: #303030;
+    color: #e3e3e3;
+}
+
+header {
+    text-align: center;
+}
+
+header img {
+    height: 3em;
+    display: inline;
+    margin-right: 0.5em;
+    vertical-align: middle;
+}
+
+header a {
+    text-decoration: none;
+}
+
+header h1 {
+    margin-top: 0.3em;
+    margin-bottom: 0.5em;
+
+    vertical-align: middle;
+
+    font-size: 3em;
+    color: #ffffff;
+    display: inline;
+    letter-spacing: 3px;
+
+    font-weight: 400;
+}
+
+section h2 {
+    font-size: 1.2em;
+    text-align: center;
+    font-weight: 400;
+    letter-spacing: 1px;
+
+    border-bottom: 1px solid #e3e3e3;
+    margin-right: 15%;
+    margin-left: 15%;
+    padding-bottom: 1em;
+    margin-bottom: 2em;
+}
+
+.gallery {
+    /*display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(28em, 1fr));
+    justify-items: center;*/
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.gallery figure {
+    flex: 0 0 30em;
+}
+
+figure {
+    text-align: center;
+}
+
+@media only screen and (max-width: 28em) {
+    .gallery figure {
+        flex: 0 0 90%;
+    }
+
+    figure {
+        margin: 1em;
+    }
+}
+
+.gallery figure img {
+    width: min(100%, 28em);
+    height: 28em;
+    object-fit: cover;
+    border-radius: 5px;
+
+    transition: opacity 0.25s ease-in-out;
+}
+
+.gallery figure img:hover {
+    opacity: 0.5;
+}
+
+footer {
+    text-align: center;
+    font-size: 0.9em;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: 2em;
+    width: 100%;
+    background: #e3e3e3;
+    color: #303030;
+}
+
+section {
+    margin-bottom: 3em;
+}
+
+nav {
+    font-size: 1em;
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+nav a {
+    text-decoration: none;
+    margin-right: 1em;
+}
+
+nav img {
+    width: 1.5em;
+}
+
+.single figure img {
+    max-width: 100%;
+    max-height: calc(100vh - 13em);
+    object-fit: cover;
+    border-radius: 5px;
+
+    transition: opacity 0.25s ease-in-out;
+}
+
+.single figure figcaption {
+    text-align: center;
+    border-top: 1px solid #e3e3e3;
+    margin-top: 1em;
+    padding-top: 1em;
+}
+
+.single {
+    margin-bottom: 3em;
+}

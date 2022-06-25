@@ -1,0 +1,39 @@
+cabal-version:      3.0
+name:               taksworks
+version:            0.1.0.0
+synopsis:           taks.works
+
+-- A longer description of the package.
+-- description:
+homepage:           taks.works
+
+-- A URL where users can report bugs.
+-- bug-reports:
+license:            NONE
+author:             taksworks
+maintainer:         tak@taks.works
+
+-- A copyright notice.
+-- copyright:
+-- category:
+extra-source-files: CHANGELOG.md
+
+executable taksworks
+    main-is:          Main.hs
+
+    -- Modules included in this executable, other than Main.
+    other-modules:    Render Type Image
+
+    -- LANGUAGE extensions used by modules in this package.
+    -- other-extensions:
+    build-depends:    JuicyPixels >= 3.3.7,
+                      base ^>=4.14.3.0,
+                      blaze-html,
+                      blaze-markup >= 0.8.2.8,
+                      bytestring >= 0.10.12.0,
+                      directory >= 1.3.6.0,
+                      unix
+
+    -- Directories containing source files.
+    -- hs-source-dirs:
+    default-language: Haskell2010
