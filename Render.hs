@@ -5,17 +5,20 @@ module Render where
 import Prelude hiding (head, title, div)
 import qualified Prelude as P
 
+import qualified Data.ByteString.Lazy as B
+import qualified Data.Text.Lazy as T
+
 import System.Directory (createDirectoryIfMissing)
 
 import Control.Monad (forM_, mapM_)
 
 import Text.Blaze.Html5 as H hiding (main)
 import Text.Blaze.Html5.Attributes as A hiding (title)
-import Text.Blaze.Html.Renderer.Pretty (renderHtml)
+import Text.Blaze.Html.Renderer.Utf8 (renderHtml)
 
 import Type
 
-figureCaption :: String -> Html
+figureCaption :: T.Text -> Html
 figureCaption s = do
   figcaption $ toHtml s
 
@@ -46,8 +49,11 @@ headSegment = head $ do
   meta ! name "viewport" ! content "width=device-width"
   link ! rel "stylesheet" ! href "/static/stylesheet.css"
 
+copyright :: T.Text
+copyright = "© 2022 taks.works"
+
 footerSegment :: Html
-footerSegment = footer $ "(c) 2022 taks.works"
+footerSegment = footer $ toHtml $ copyright
 
 mainPage :: [Album] -> Html
 mainPage albums = html $ do
@@ -97,7 +103,7 @@ renderPhoto :: Album -> Photo -> Maybe Photo -> Maybe Photo -> IO ()
 renderPhoto album photo prevPhoto nextPhoto = do
   let s = renderHtml $ photoPage album photo prevPhoto nextPhoto
   createDirectoryIfMissing True dirPath
-  writeFile path s
+  B.writeFile path s
   where
     dirPath = (albumName album ++ "/" ++ photoName photo)
     path = (dirPath ++ "/index.html")
@@ -115,6 +121,6 @@ renderAlbum album = do
 render :: [Album] -> IO ()
 render albums = do
   let s = renderHtml $ mainPage albums
-  writeFile "index.html" s
+  B.writeFile "index.html" s
 
   mapM_ renderAlbum albums

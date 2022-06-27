@@ -32,7 +32,8 @@ executable taksworks
                       blaze-markup >= 0.8.2.8,
                       bytestring >= 0.10.12.0,
                       directory >= 1.3.6.0,
-                      unix
+                      unix,
+                      text
 
     -- Directories containing source files.
     -- hs-source-dirs:

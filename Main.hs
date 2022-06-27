@@ -4,6 +4,7 @@ import System.Posix.Directory
 import System.Posix.Files
 import Control.Monad (mapM)
 import Data.List (sort)
+import qualified Data.Text.Lazy.IO as TIO
 
 import Type (Photo(Photo), Album(Album))
 import Render (render)
@@ -64,7 +65,7 @@ getPhoto baseDir (filename, descriptionPath) = do
   status <- getStatus baseDir filename
   pure $ Photo filename (modificationTime status) description
   where
-    get p = Just <$> readFile (baseDir ++ "/" ++ p)
+    get p = Just <$> TIO.readFile (baseDir ++ "/" ++ p)
 
 getStatus :: String -> String -> IO FileStatus
 getStatus baseDir p = do

@@ -1,11 +1,12 @@
 module Type where
 
+import Data.Text.Lazy (Text)
 import System.Posix.Types
 
 data Photo = Photo
   { photoName :: String
   , time :: EpochTime
-  , description :: Maybe String
+  , description :: Maybe Text
   }
   deriving (Show, Eq)
 
