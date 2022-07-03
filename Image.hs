@@ -5,11 +5,12 @@
 
 module Image where
 
+import Control.Concurrent (threadDelay)
 import Codec.Picture
 import Codec.Picture.Saving
 import qualified Codec.Picture.Types as M
 import Control.Monad.ST
-import Data.Either (rights)
+import Data.Either (rights, lefts)
 import Data.ByteString.Lazy (ByteString)
 import qualified Data.ByteString.Lazy as B
 import System.Directory (createDirectoryIfMissing)
@@ -102,12 +103,18 @@ scaleImage i = scaleBilinear w h i
 saveImage :: (Image M.PixelRGBA8, String) -> IO ()
 saveImage (image, path) = (B.writeFile path . imageToPng . ImageRGBA8 . scaleImage) $ image
 
-saveThumbnails :: [Album] -> IO ()
-saveThumbnails albums = do
-  imagesE <- mapM readImage $ albumPaths
-  let images = fmap convertRGBA8 . rights $ imagesE
+saveThumbnails :: Int -> [Album] -> IO ()
+saveThumbnails retry albums = do
   mapM_ (createDirectoryIfMissing True . albumThumbDir) albums
-  mapM_ saveImage $ zip images thumbnailPaths
+  imagesE <- mapM readImage $ albumPaths
+  if (retry < 60) && (not . null . lefts $ imagesE)
+    then do
+      putStrLn $ "wait for image " ++ (show $ lefts imagesE)
+      threadDelay (1000 * 1000)
+      saveThumbnails (retry + 1) albums
+    else do
+      let images = fmap convertRGBA8 . rights $ imagesE
+      mapM_ saveImage $ zip images thumbnailPaths
 
   where
     albumPaths = unwrapAlbums photoPath albums

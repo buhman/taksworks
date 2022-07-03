@@ -1,7 +1,11 @@
 {-# LANGUAGE ViewPatterns #-}
 
 import System.Posix.Directory
-import System.Posix.Files
+import System.Posix.Files ( FileStatus
+                          , getFileStatus
+                          , modificationTime
+                          , isRegularFile
+                          , isDirectory)
 import Control.Monad (mapM)
 import Data.List (sort)
 import qualified Data.Text.Lazy.IO as TIO
@@ -95,5 +99,6 @@ main = do
   lines <- lines <$> readFile "./photos/albums.txt"
   let dirs1 = sortFilterLines lines dirs0
   albums <- mapM (getAlbum baseDir) dirs1
+
+  saveThumbnails 0 albums
   render albums
-  saveThumbnails albums
